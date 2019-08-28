@@ -11,6 +11,7 @@ app.get('/buzzes', (req, res) => {
     admin
         .firestore()
         .collection('buzzes')
+        .orderBy('createdAt', 'desc')
         .get()
         .then((data) => {
             let buzzes = [];
@@ -31,7 +32,7 @@ app.post('/buzz', (req, res) => {
     const newBuzz = {
         body: req.body.body,
         userHandle: req.body.userHandle,
-        createdAt: admin.firestore.Timestamp.fromDate(new Date())
+        createdAt: new Date().toISOString()
     };
 
     admin.firestore()
