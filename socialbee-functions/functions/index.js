@@ -20,6 +20,37 @@ firebase.initializeApp(config);
 const db = admin.firestore();
 let token, userId;
 
+// middleware to check authorization
+const FireBaseAuth = (req, res, next) => {
+  let idToken;
+  // check whether header has authorization
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      idToken = req.headers.authorization.split('Bearer ')[1];
+  } else {
+      console.error('No token found');
+      return res.status(403).json({ error: 'Unauthorized' });
+  }
+
+  // continue if idToken is populated
+  admin.auth().verifyIdToken(idToken)
+      .then(decodedToken => {
+          req.user = decodedToken;
+          console.log(decodedToken);
+          return db.collection('users')
+              .where('userId', '==', req.user.uid)
+              .limit(1)
+              .get();
+      })
+      .then(data => {
+          req.user.handle = data.docs[0].data().handle;
+          return next();
+      })
+      .catch(err => {
+          console.error('Error while verifying token ', err);
+          return res.status(403).json(err);
+      })
+};
+
 // using express to figure out the apis
 app.get('/buzzes', (req, res) => {
     db
@@ -41,10 +72,11 @@ app.get('/buzzes', (req, res) => {
         .catch((err) => console.error(err));
 });
 
-app.post('/buzz', (req, res) => {
+// use auth middleware so that we restrict who posts a buzz
+app.post('/buzz', FireBaseAuth, (req, res) => {
     const newBuzz = {
         body: req.body.body,
-        userHandle: req.body.userHandle,
+        userHandle: req.user.handle,
         createdAt: new Date().toISOString()
     };
 
@@ -60,7 +92,7 @@ app.post('/buzz', (req, res) => {
         })
 });
 
-//field validation
+// field validation
 const isEmail = (email) => {
     const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return (email.match(regEx));
@@ -70,7 +102,7 @@ const isEmpty = (string) => {
     return (string.trim() === '' );
 };
 
-//Signup route
+// Signup route
 app.post('/signup', (req, res) => {
    const newUser = {
        email: req.body.email,
@@ -131,7 +163,7 @@ app.post('/signup', (req, res) => {
        })
 });
 
-//login route
+// login route
 app.post('/login', (req, res) => {
    const user = {
        email: req.body.email,
