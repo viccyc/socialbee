@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const app = require ('express')();
 // const { admin, db } = require('./util/admin');
 
-const { FireBaseAuth } = require('./util/FBAuth');
+const fireBaseAuth = require('./util/FBAuth');
 
 const { getAllBuzzes, postOneBuzz } = require('./handlers/buzzes');
 const { signUpUser, loginUser } = require('./handlers/users');
@@ -17,8 +17,7 @@ app.get('/buzzes', getAllBuzzes);
 
 // use auth middleware so that we restrict who posts a buzz
 
-// TODO: need to figure out why this errors
-// app.post('/buzz', FireBaseAuth, postOneBuzz);
+app.post('/buzz', fireBaseAuth, postOneBuzz);
 
 // User routes
 // Signup route

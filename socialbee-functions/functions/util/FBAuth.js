@@ -1,4 +1,4 @@
-const { admin } = require('./admin');
+const { admin, db } = require('./admin');
 
 // middleware to check authorization
 module.exports = (req, res, next) => {
