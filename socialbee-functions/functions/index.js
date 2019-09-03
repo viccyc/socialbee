@@ -5,7 +5,7 @@ const app = require ('express')();
 const fireBaseAuth = require('./util/FBAuth');
 
 const { getAllBuzzes, postOneBuzz } = require('./handlers/buzzes');
-const { signUpUser, loginUser } = require('./handlers/users');
+const { signUpUser, loginUser, uploadImage } = require('./handlers/users');
 
 // const firebase = require('firebase');
 // firebase.initializeApp(config);
@@ -22,8 +22,8 @@ app.post('/buzz', fireBaseAuth, postOneBuzz);
 // User routes
 // Signup route
 app.post('/signup', signUpUser);
-
 // login route
 app.post('/login', loginUser);
+app.post('/users/image', fireBaseAuth, uploadImage);
 
 exports.api = functions.https.onRequest(app);
