@@ -95,9 +95,9 @@ exports.uploadImage = (req, res) => {
     let imageToBeUploaded;
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-       console.log('fieldname: ', fieldname);
-       console.log('filename: ', filename);
-       console.log('mimetype: ', mimetype);
+       if (!mimetype.startsWith('image')) {
+           return res.status(400).json({ error: 'Wrong file type submitted'});
+       }
 
        const imageExtension = filename.split('.')[filename.split('.').length - 1];
        imageFileName = `${Math.round(Math.random()*100000000)}.${imageExtension}`;
@@ -116,6 +116,7 @@ exports.uploadImage = (req, res) => {
           }
       })
           .then(() => {
+          // alt=media saves to db rather than downloading image file
           const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
           return db.doc(`/users/${req.user.handle}`).update({ imageUrl });
       })
