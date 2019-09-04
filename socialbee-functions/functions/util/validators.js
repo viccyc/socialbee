@@ -8,6 +8,7 @@ const isEmpty = (string) => {
   return (string.trim() === '' );
 };
 
+// data is equivalent to req.body, so has those properties
 exports.validateSignUpData = (data) => {
   let errors = {};
 
@@ -25,7 +26,7 @@ exports.validateSignUpData = (data) => {
     errors,
     valid: Object.keys(errors).length === 0 ? true : false
   }
-}
+};
 
 exports.validateLoginData = (data) => {
 
@@ -38,4 +39,21 @@ exports.validateLoginData = (data) => {
     errors,
     valid: Object.keys(errors).length === 0 ? true : false
   }
-}
+};
+
+// check if fields are empty and if not, populate userDetails
+exports.reduceUserDetails = (data) => {
+  let userDetails = {};
+  let website = data.website.trim();
+
+  if(!isEmpty(data.bio.trim())) userDetails.bio = data.bio;
+  if(!isEmpty(website)) {
+    if(website.startsWith('http')) {
+      userDetails.website = website;
+    } else userDetails.website = `http://${website}`;
+  }
+  if(!isEmpty(data.location.trim())) userDetails.location = data.location;
+
+  return userDetails;
+};
+

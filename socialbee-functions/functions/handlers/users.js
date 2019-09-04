@@ -1,5 +1,5 @@
 const { admin, db } = require('../util/admin');
-const { validateSignUpData, validateLoginData } = require('../util/validators');
+const { validateSignUpData, validateLoginData, reduceUserDetails } = require('../util/validators');
 
 const firebase = require('firebase');
 const config = require('../util/config');
@@ -83,6 +83,19 @@ exports.loginUser = (req, res) => {
       });
 };
 
+exports.addUserDetails = (req, res) => {
+  let userDetails = reduceUserDetails(req.body);
+
+  db.doc(`/users/${req.user.handle}`).update(userDetails)
+        .then(() => {
+            res.json({ message: 'User updated successfully' });
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err.code });
+        })
+};
+
+// upload a profile image for user
 exports.uploadImage = (req, res) => {
     const BusBoy = require('busboy');
     const path = require('path');
@@ -130,4 +143,4 @@ exports.uploadImage = (req, res) => {
     });
 
     busboy.end(req.rawBody);
-}
+};

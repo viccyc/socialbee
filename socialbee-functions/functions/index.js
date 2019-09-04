@@ -1,29 +1,21 @@
 const functions = require('firebase-functions');
+// using express to figure out the apis
 const app = require ('express')();
-// const { admin, db } = require('./util/admin');
 
+// use auth middleware so that we restrict who posts a buzz
 const fireBaseAuth = require('./util/FBAuth');
 
 const { getAllBuzzes, postOneBuzz } = require('./handlers/buzzes');
-const { signUpUser, loginUser, uploadImage } = require('./handlers/users');
-
-// const firebase = require('firebase');
-// firebase.initializeApp(config);
-let token, userId;
+const { signUpUser, loginUser, uploadImage, addUserDetails } = require('./handlers/users');
 
 // buzz routes
-// using express to figure out the apis
 app.get('/buzzes', getAllBuzzes);
-
-// use auth middleware so that we restrict who posts a buzz
-
 app.post('/buzz', fireBaseAuth, postOneBuzz);
 
 // User routes
-// Signup route
 app.post('/signup', signUpUser);
-// login route
 app.post('/login', loginUser);
 app.post('/users/image', fireBaseAuth, uploadImage);
+app.post('/user', fireBaseAuth, addUserDetails);
 
 exports.api = functions.https.onRequest(app);
