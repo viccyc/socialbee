@@ -5,12 +5,13 @@ const app = require ('express')();
 // use auth middleware so that we restrict who posts a buzz
 const fireBaseAuth = require('./util/FBAuth');
 
-const { getAllBuzzes, postOneBuzz } = require('./handlers/buzzes');
+const { getAllBuzzes, postOneBuzz, getBuzzById } = require('./handlers/buzzes');
 const { signUpUser, loginUser, uploadImage, addUserDetails, getAuthenticatedUser } = require('./handlers/users');
 
 // buzz routes
 app.get('/buzzes', getAllBuzzes);
 app.post('/buzz', fireBaseAuth, postOneBuzz);
+app.get('/buzz/:buzzId', getBuzzById);
 
 // User routes
 app.post('/signup', signUpUser);

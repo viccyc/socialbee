@@ -19,6 +19,14 @@ let db = {
             likeCount: 5,
             commentCount: 2
         }
+    ],
+    comments: [
+        {
+            userHandle: 'user',
+            buzzId: 'sakdfhalsdjfaldkfjalsf',
+            body: 'this is the buzz body',
+            createdAt: '2019-09-03T21:38:15.623Z',
+        }
     ]
 };
 

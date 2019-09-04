@@ -38,3 +38,31 @@ exports.postOneBuzz = (req, res) => {
           console.error(err);
       })
 };
+
+exports.getBuzzById = (req, res) => {
+  let buzzData = {};
+  db.doc(`/buzzes/${req.params.buzzId}`).get()
+      .then((doc) => {
+          if(!doc.exists) {
+              return res.status(404).json({ message: 'Buzz does not exist' });
+          }
+          buzzData = doc.data();
+          buzzData.buzzId = doc.id;
+          return db
+              .collection('comments')
+              .where('buzzId', '==', req.params.buzzId)
+              .orderBy('createdAt', 'desc')
+              .get();
+      })
+      .then((data) => {
+          buzzData.comments = [];
+          data.forEach((doc) => {
+              buzzData.comments.push(doc.data());
+          });
+          return res.json(buzzData);
+      })
+      .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: err.code });
+      });
+};
