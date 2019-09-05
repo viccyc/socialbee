@@ -91,7 +91,10 @@ exports.addBuzzComment = (req, res) => {
           if (!doc.exists) {
               return res.status(404).json({ error: 'Buzz not found' });
           }
-          return db.collection('comments').add(newComment);
+          return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
+        })
+        .then(() => {
+            return db.collection('comments').add(newComment);
         })
         .then(() => {
             return res.json(newComment);
@@ -160,14 +163,13 @@ exports.unlikeBuzz = (req, res) => {
             if (doc.exists) {
                 buzzData = doc.data();
                 buzzData.buzzId = doc.id;
-                console.log('buzzData:' , buzzData);
                 return likeDocument.get();
             } else {
                 return res.status(404).json({ error: 'Buzz not found' });
             }
         })
         .then((data) => {
-            // check if the person has already liked this buzz
+            // check if the person has not liked this buzz already
             if (data.empty) {
                 res.status(400).json({error: "You've not liked this Buzz before "});
             } else {
@@ -185,4 +187,28 @@ exports.unlikeBuzz = (req, res) => {
             console.error(err);
             res.status(500).json({ error: err.code });
         })
+};
+
+exports.deleteBuzz = (req, res) => {
+  const document = db.doc(`/buzzes/${req.params.buzzId}`);
+  document.get()
+      .then((doc) => {
+          if (!doc.exists) {
+              return res.status(404).json({ error: 'Buzz not found' });
+          }
+          if (doc.data().userHandle !== req.user.handle) {
+              return res.status(403).json({ error: 'Unauthorized' });
+          } else {
+              return document.delete();
+          }
+      })
+      .then(() => {
+          return res.json({ message: 'Buzz deleted successfully' });
+      })
+      .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: err.code });
+      }
+
+    )
 };
