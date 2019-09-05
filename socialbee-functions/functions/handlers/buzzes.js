@@ -66,3 +66,30 @@ exports.getBuzzById = (req, res) => {
           return res.status(500).json({ error: err.code });
       });
 };
+
+exports.addBuzzComment = (req, res) => {
+    if (req.body.body.trim() === '') return res.status(400).json({ error: 'Must not be empty' });
+
+    const newComment = {
+        body: req.body.body,
+        createdAt: new Date().toISOString(),
+        buzzId: req.params.buzzId,
+        userHandle: req.user.handle,
+        userImage: req.user.imageUrl
+    };
+
+    db.doc(`/buzzes/${req.params.buzzId}`).get()
+        .then((doc) => {
+          if (!doc.exists) {
+              return res.status(404).json({ error: 'Buzz not found' });
+          }
+          return db.collection('comments').add(newComment);
+        })
+        .then(() => {
+            return res.json(newComment);
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+};
