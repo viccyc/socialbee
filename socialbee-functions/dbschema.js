@@ -27,7 +27,17 @@ let db = {
             body: 'this is the buzz body',
             createdAt: '2019-09-03T21:38:15.623Z',
         }
-    ]
+    ],
+    notifications: [
+        {
+            recipient: 'viccy',
+            sender: 'user',
+            read: true | false,
+            buzzId: 'sakdfhalsdjfaldkfjalsf',
+            type: 'like | comment',
+            createdAt: '2019-09-03T21:38:15.623Z',
+        }
+    ]    
 };
 
 const userDetails = {
