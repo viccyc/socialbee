@@ -209,6 +209,5 @@ exports.deleteBuzz = (req, res) => {
           console.error(err);
           return res.status(500).json({ error: err.code });
       }
-
     )
 };

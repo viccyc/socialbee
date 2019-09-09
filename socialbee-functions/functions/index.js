@@ -37,11 +37,10 @@ app.get('/user', fireBaseAuth, getAuthenticatedUser);
 exports.api = functions.https.onRequest(app);
 
 // database trigger, not api endpoint so no response needed to send back
-exports.createNotificationOnLike = functions.firestore.document('likes/{id}').onCreate((snapshot) => {
-  console.log('buzz id: ', (`/buzzes/${snapshot.data().buzzId}`));
+exports.createNotificationOnLike = functions.firestore.document('likes/{id}')
+    .onCreate((snapshot) => {
   db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
   .then((doc) => {
-    console.log('exists: ', (doc.exists));
     if (doc.exists) {
       return db.doc(`/notifications/${snapshot.id}`).set({
         createdAt: new Date().toISOString(),
@@ -62,8 +61,9 @@ exports.createNotificationOnLike = functions.firestore.document('likes/{id}').on
   });
 });
 
-exports.deleteNotificationOnUnlike = functions.firestore.document('like/{id}').onDelete((snapshot) => {
-  db.doc(`buzzes/${snapshot.id}`).delete()
+exports.deleteNotificationOnUnlike = functions.firestore.document('likes/{id}')
+    .onDelete((snapshot) => {
+  db.doc(`notifications/${snapshot.id}`).delete()
   .then(() => {
     return;
   })
@@ -73,7 +73,8 @@ exports.deleteNotificationOnUnlike = functions.firestore.document('like/{id}').o
   });
 });
 
-exports.createNotificationOnComment = functions.firestore.document('comment/{id}').onCreate((snapshot) => {
+exports.createNotificationOnComment = functions.firestore.document('comments/{id}')
+    .onCreate((snapshot) => {
   db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
   .then((doc) => {
     if (doc.exists) {
