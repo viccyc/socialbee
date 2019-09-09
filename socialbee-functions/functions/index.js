@@ -16,7 +16,9 @@ const { signUpUser,
     loginUser,
     uploadImage,
     addUserDetails,
-    getAuthenticatedUser } = require('./handlers/users');
+    getAuthenticatedUser,
+    getUserDetails,
+    markNotificationsRead } = require('./handlers/users');
 
 // buzz routes
 app.get('/buzzes', getAllBuzzes);
@@ -33,6 +35,8 @@ app.post('/login', loginUser);
 app.post('/users/image', fireBaseAuth, uploadImage);
 app.post('/user', fireBaseAuth, addUserDetails);
 app.get('/user', fireBaseAuth, getAuthenticatedUser);
+app.get('/user/:handle', getUserDetails);
+app.post('/notifications', fireBaseAuth, markNotificationsRead);
 
 exports.api = functions.https.onRequest(app);
 
