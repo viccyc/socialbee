@@ -43,7 +43,7 @@ exports.api = functions.https.onRequest(app);
 // database trigger, not api endpoint so no response needed to send back
 exports.createNotificationOnLike = functions.firestore.document('likes/{id}')
     .onCreate((snapshot) => {
-  db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
+  return db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
   .then((doc) => {
     if (doc.exists) {
       return db.doc(`/notifications/${snapshot.id}`).set({
@@ -56,12 +56,8 @@ exports.createNotificationOnLike = functions.firestore.document('likes/{id}')
       })
     }
   })
-  .then(() => {
-    return;
-  })
   .catch((err) => {
     console.error(err);
-    return;
   });
 });
 
