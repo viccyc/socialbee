@@ -45,7 +45,7 @@ exports.createNotificationOnLike = functions.firestore.document('likes/{id}')
     .onCreate((snapshot) => {
   return db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
   .then((doc) => {
-    if (doc.exists) {
+    if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) {
       return db.doc(`/notifications/${snapshot.id}`).set({
         createdAt: new Date().toISOString(),
         recipient: doc.data().userHandle,
@@ -56,28 +56,23 @@ exports.createNotificationOnLike = functions.firestore.document('likes/{id}')
       })
     }
   })
-  .catch((err) => {
-    console.error(err);
-  });
+  .catch((err) =>
+      console.error(err));
 });
 
 exports.deleteNotificationOnUnlike = functions.firestore.document('likes/{id}')
     .onDelete((snapshot) => {
-  db.doc(`notifications/${snapshot.id}`).delete()
-  .then(() => {
-    return;
-  })
-  .catch((err) => {
-    console.error(err);
-    return;
-  });
+  return db.doc(`notifications/${snapshot.id}`)
+  .delete()
+  .catch((err) =>
+    console.error(err));
 });
 
 exports.createNotificationOnComment = functions.firestore.document('comments/{id}')
     .onCreate((snapshot) => {
-  db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
+  return db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
   .then((doc) => {
-    if (doc.exists) {
+    if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) {
       return db.doc(`/notifications/${snapshot.id}`).set({
         recipient: doc.data().userHandle,
         sender: snapshot.data().userHandle,
@@ -88,11 +83,6 @@ exports.createNotificationOnComment = functions.firestore.document('comments/{id
       })
     }
   })
-  .then(() => {
-    return;
-  })
-  .catch((err) => {
-    console.error(err);
-    return;
-  });
+  .catch((err) =>
+    console.error(err));
 });
