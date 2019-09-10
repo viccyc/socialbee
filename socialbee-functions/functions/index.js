@@ -104,7 +104,7 @@ exports.onUserImageChange = functions.firestore.document('users/{userId}')
                 })
                 .catch((err) =>
                     console.error(err));
-        }
+        } else return true;
     });
 
 // when buzz is deleted, delete all related data
