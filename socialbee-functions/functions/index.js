@@ -106,3 +106,36 @@ exports.onUserImageChange = functions.firestore.document('users/{userId}')
                     console.error(err));
         }
     });
+
+// when buzz is deleted, delete all related data
+exports.onBuzzDelete = functions.firestore.document('buzzes/{buzzId}')
+    .onDelete((snapshot, context) => {
+        const buzzId = context.params.buzzId;
+        const batch = db.batch();
+        return db.collection('comments')
+            .where('buzzId', '==', buzzId)
+            .get()
+            .then((data) => {
+                data.forEach((doc) => {
+                    batch.delete(db.doc(`/comments/${doc.id}`));
+                });
+                return db.collection('likes')
+                    .where('buzzId', '==', buzzId)
+                    .get()
+                    .then((data) => {
+                        data.forEach((doc) => {
+                            batch.delete(db.doc(`/likes/${doc.id}`));
+                        });
+                        return db.collection('notifications')
+                            .where('buzzId', '==', buzzId)
+                            .get()
+                            .then((data) => {
+                                data.forEach((doc) => {
+                                    batch.delete(db.doc(`/notifications/${doc.id}`));
+                                });
+                                return batch.commit();
+                            })
+                    })
+            })
+            .catch((err) => console.error(err));
+    });
