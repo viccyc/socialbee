@@ -43,46 +43,66 @@ exports.api = functions.https.onRequest(app);
 // database trigger, not api endpoint so no response needed to send back
 exports.createNotificationOnLike = functions.firestore.document('likes/{id}')
     .onCreate((snapshot) => {
-  return db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
-  .then((doc) => {
-    if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) {
-      return db.doc(`/notifications/${snapshot.id}`).set({
-        createdAt: new Date().toISOString(),
-        recipient: doc.data().userHandle,
-        sender: snapshot.data().userHandle,
-        read: false,
-        type: 'like',
-        buzzId: doc.id
+      return db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
+      .then((doc) => {
+        if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) {
+          return db.doc(`/notifications/${snapshot.id}`).set({
+            createdAt: new Date().toISOString(),
+            recipient: doc.data().userHandle,
+            sender: snapshot.data().userHandle,
+            read: false,
+            type: 'like',
+            buzzId: doc.id
+          })
+        }
       })
-    }
-  })
-  .catch((err) =>
-      console.error(err));
-});
+      .catch((err) =>
+          console.error(err));
+    });
 
 exports.deleteNotificationOnUnlike = functions.firestore.document('likes/{id}')
     .onDelete((snapshot) => {
-  return db.doc(`notifications/${snapshot.id}`)
-  .delete()
-  .catch((err) =>
-    console.error(err));
-});
+      return db.doc(`notifications/${snapshot.id}`)
+      .delete()
+      .catch((err) =>
+        console.error(err));
+    });
 
 exports.createNotificationOnComment = functions.firestore.document('comments/{id}')
     .onCreate((snapshot) => {
-  return db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
-  .then((doc) => {
-    if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) {
-      return db.doc(`/notifications/${snapshot.id}`).set({
-        recipient: doc.data().userHandle,
-        sender: snapshot.data().userHandle,
-        read: false,
-        buzzId: doc.id,
-        type: 'comment',
-        createdAt: new Date().toISOString()
+      return db.doc(`/buzzes/${snapshot.data().buzzId}`).get()
+      .then((doc) => {
+        if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle) {
+          return db.doc(`/notifications/${snapshot.id}`).set({
+            recipient: doc.data().userHandle,
+            sender: snapshot.data().userHandle,
+            read: false,
+            buzzId: doc.id,
+            type: 'comment',
+            createdAt: new Date().toISOString()
+          })
+        }
       })
-    }
-  })
-  .catch((err) =>
-    console.error(err));
-});
+      .catch((err) =>
+        console.error(err));
+    });
+
+// update previous buzzes with new user image when the user changes their profile image
+exports.onUserImageChange = functions.firestore.document('users/{userId}')
+    .onUpdate((change) => {
+        if (change.before.data().imageUrl !== change.after.data().imageUrl) {
+            const batch = db.batch();
+            return db.collection('buzzes')
+                .where('userHandle', '==', change.before.data().handle)
+                .get()
+                .then((data) => {
+                    data.forEach((doc) => {
+                        const buzz = db.doc(`/buzzes/${doc.id}`);
+                        batch.update(buzz, { userImage: change.after.data().imageUrl });
+                    });
+                    return batch.commit();
+                })
+                .catch((err) =>
+                    console.error(err));
+        }
+    });
