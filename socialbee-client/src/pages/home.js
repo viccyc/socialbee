@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
+import Buzz from '../components/Buzz';
 
 class Home extends Component {
     state = {
@@ -12,17 +13,16 @@ class Home extends Component {
     componentDidMount() {
         axios.get('/buzzes')
             .then((res) => {
-            console.log(res.data);
                 this.setState({
                     buzzes: res.data
-                })
+                });
             })
             .catch((err) => console.log(err));
     }
 
     render() {
         let recentBuzzMarkup = this.state.buzzes ? (
-            this.state.buzzes.map((buzz) => <p>{buzz.body}</p>)
+            this.state.buzzes.map((buzz) => <Buzz buzz={buzz}/>)
         ) : (
             <p>Loading.......</p>
         );
