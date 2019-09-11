@@ -27,12 +27,15 @@ const theme = createMuiTheme({
             contrastText: '#fff',
         },
     },
+    typography: {
+        useNextVariants: true
+    }
 });
 
 class App extends Component {
     render() {
         return (
-            <MuiThemeProvider>
+            <MuiThemeProvider theme={theme}>
                 <div className="App">
                     <Router>
                         <Navbar/>
