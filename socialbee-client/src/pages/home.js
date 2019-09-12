@@ -22,7 +22,7 @@ class Home extends Component {
 
     render() {
         let recentBuzzMarkup = this.state.buzzes ? (
-            this.state.buzzes.map((buzz) => <Buzz buzz={buzz}/>)
+            this.state.buzzes.map((buzz) => <Buzz key={buzz.buzzId} buzz={buzz}/>)
         ) : (
             <p>Loading.......</p>
         );

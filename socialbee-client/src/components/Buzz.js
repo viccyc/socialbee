@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-// import Link from 'react-router-dom/Link';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 // MUI imports
 import Card from '@material-ui/core/Card';
@@ -20,12 +21,14 @@ const styles = {
         width: 150
     },
     content: {
-        padding: 25
+        padding: 25,
+        objectFit: 'cover'
     }
 };
 
 class Buzz extends Component {
     render() {
+        dayjs.extend(relativeTime);
         const { classes,
             buzz: {
                 body,
@@ -49,7 +52,7 @@ class Buzz extends Component {
                     </Typography>
                     <Typography variant="body1">{body}</Typography>
                     <Typography variant="body2" color="textSecondary">
-                        {createdAt}
+                        {dayjs(createdAt).fromNow()}
                     </Typography>
                 </CardContent>
             </Card>
