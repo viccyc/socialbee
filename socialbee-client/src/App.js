@@ -35,7 +35,7 @@ class App extends Component {
     render() {
         return (
             <MuiThemeProvider theme={theme}>
-                <div className="App">
+                <Provider store={store}>
                     <Router>
                         <Navbar/>
                         <div className="container">
@@ -46,7 +46,7 @@ class App extends Component {
                             </Switch>
                         </div>
                     </Router>
-                </div>
+                </Provider>
             </MuiThemeProvider>
         );
     }
