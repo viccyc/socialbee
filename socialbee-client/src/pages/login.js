@@ -9,6 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const Link = require("react-router-dom").Link;
 
 const styles = {
     form: {
@@ -25,7 +28,16 @@ const styles = {
         margin: '10px auto 10px auto'
     },
     button: {
-        marginTop: 20
+        marginTop: 20,
+        position: 'relative'
+    },
+    customError: {
+        color: 'red',
+        fontSize: '0.8rem',
+        marginTop: 10
+    },
+    progress: {
+        position: 'absolute'
     }
 };
 
@@ -47,7 +59,7 @@ class Login extends Component {
         });
         const userData = {
             email: this.state.email,
-            passwod: this.state.password
+            password: this.state.password
         };
         axios.post('/login', userData)
             .then((res) => {
@@ -59,7 +71,7 @@ class Login extends Component {
             })
             .catch((err) => {
                 this.setState({
-                    error: err.response.data,
+                    errors: err.response.data,
                     loading: false
                 })
             })
@@ -99,10 +111,22 @@ class Login extends Component {
                             error={errors.password ? true : false}
                             onChange={this.handleChange}
                             fullWidth/>
+                        {errors.general && (
+                            <Typography variant="body2" className={classes.customError}>
+                                {errors.general}
+                            </Typography>
+                        )}
                         <Button className={classes.button} type="submit"
-                                variant="contained" color="primary">
+                                variant="contained" color="primary"
+                                disabled={loading}>
                             Login
+                            {loading && (
+                                <CircularProgress size={30} className={classes.progress}/>
+                            )}
                         </Button>
+                        <br/>
+                        <br/>
+                        <small>Don't have an account? Sign up <Link to="/signup">here</Link></small>
                     </form>
                 </Grid>
                 <Grid item sm/>
