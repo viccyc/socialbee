@@ -1,4 +1,5 @@
 export default {
+    // created using color tool https://material-ui.com/customization/color/
     palette: {
         primary: {
             light: '#d05ce3',

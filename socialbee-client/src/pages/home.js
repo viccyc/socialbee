@@ -4,6 +4,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
 import Buzz from '../components/Buzz';
+import Profile from '../components/Profile';
 
 class Home extends Component {
     state = {
