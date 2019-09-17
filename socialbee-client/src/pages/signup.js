@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/favicon.ico';
-import axios from 'axios';
 
 // MUI imports
 import Grid from '@material-ui/core/Grid';
