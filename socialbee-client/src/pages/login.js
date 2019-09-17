@@ -27,6 +27,13 @@ class Login extends Component {
             errors: {}
         }
     }
+    // need to set state if there are errors as they don't get set straight away
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.UI.errors) {
+            this.setState({ errors: nextProps.UI.errors });
+        }
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
         const userData = {

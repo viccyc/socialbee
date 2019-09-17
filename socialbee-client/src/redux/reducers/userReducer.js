@@ -3,6 +3,7 @@ import {SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI,
 
 const initialState = {
     authenticated: false,
+    // holds all the user details such as handle etc.
     credentials: {},
     likes: [],
     notifications: []
