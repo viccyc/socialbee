@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/favicon.ico';
-import axios from 'axios';
-
 // MUI imports
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+// Redux imports
+import { connect } from 'react-redux';
+import { loginUser } from "../redux/actions/userActions";
 
 const Link = require("react-router-dom").Link;
 
@@ -26,14 +27,13 @@ class Login extends Component {
             errors: {}
         }
     }
-
     handleSubmit = (event) => {
         event.preventDefault();
         const userData = {
             email: this.state.email,
             password: this.state.password
         };
-
+        this.props.loginUser(userData, this.props.history);
     };
     handleChange = (event) => {
         this.setState({
@@ -42,8 +42,8 @@ class Login extends Component {
     };
 
     render() {
-        const { classes } = this.props;
-        const { errors, loading } = this.state;
+        const { classes, UI: { loading } } = this.props;
+        const { errors } = this.state;
 
         return (
             <Grid container className={classes.form}>
@@ -95,9 +95,21 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = (state) => ({
+   user: state.user,
+   UI: state.UI
+});
+
+const mapActionsToProps = {
+    loginUser
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Login));
 
 
