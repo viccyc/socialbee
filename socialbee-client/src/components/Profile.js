@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs';
+import EditDetails from './EditDetails';
 // MUI imports
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -95,6 +96,7 @@ class Profile extends Component {
                             <KeyboardReturn color="primary"/>
                         </IconButton>
                     </Tooltip>
+                    <EditDetails/>
                 </div>
             </Paper>
         ) : (
