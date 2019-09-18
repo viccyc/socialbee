@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 // Icons
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
@@ -21,6 +23,13 @@ const styles = (theme) => ({
 });
 
 class Profile extends Component {
+    handleImageChange = (event) => {
+        const image = event.target.files[0];
+    };
+    handleEditPicture = () => {
+        const fileInput = document.getElementById('imageUpload');
+        fileInput.click();
+    };
     render() {
         const {
             classes,
@@ -35,6 +44,13 @@ class Profile extends Component {
                 <div className={classes.profile}>
                     <div className="image-wrapper">
                         <img src={imageUrl} alt="profile" className="profile-image"/>
+                        <input type="file" id="imageUpload"
+                               hidden="hidden"
+                               onChange={this.handleImageChange}
+                        />
+                        <IconButton onClick={this.handleEditPicture} className="button">
+                            <EditIcon color="primary"/>
+                        </IconButton>
                     </div>
                     <hr/>
                     <div className="profile-details">
