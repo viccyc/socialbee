@@ -16,7 +16,7 @@ import { signupUser } from "../redux/actions/userActions";
 const Link = require("react-router-dom").Link;
 
 const styles = (theme) => ({
-    ...theme.spreadTheme
+    ...theme.mainTheme
 });
 
 class Signup extends Component {
