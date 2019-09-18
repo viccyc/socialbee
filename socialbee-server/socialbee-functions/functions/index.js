@@ -32,7 +32,7 @@ app.delete('/buzz/:buzzId', fireBaseAuth, deleteBuzz);
 // User routes
 app.post('/signup', signUpUser);
 app.post('/login', loginUser);
-app.post('/users/image', fireBaseAuth, uploadImage);
+app.post('/user/image', fireBaseAuth, uploadImage);
 app.post('/user', fireBaseAuth, addUserDetails);
 app.get('/user', fireBaseAuth, getAuthenticatedUser);
 app.get('/user/:handle', getUserDetails);
