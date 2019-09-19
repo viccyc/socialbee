@@ -2,28 +2,23 @@ import React, {Component} from 'react';
 // use this to make http requests to node (proxy setup in package.json)
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
 
 import Buzz from '../components/Buzz';
 import Profile from '../components/Profile';
 
-class Home extends Component {
-    state = {
-        buzzes: null
-    };
+import { connect } from 'react-redux';
+import { getBuzzes } from "../redux/actions/dataActions";
 
+class Home extends Component {
     componentDidMount() {
-        axios.get('/buzzes')
-            .then((res) => {
-                this.setState({
-                    buzzes: res.data
-                });
-            })
-            .catch((err) => console.log(err));
+        this.props.getBuzzes();
     }
 
     render() {
-        let recentBuzzMarkup = this.state.buzzes ? (
-            this.state.buzzes.map((buzz) => <Buzz key={buzz.buzzId} buzz={buzz}/>)
+        const { buzzes, loading } = this.props.data;
+        let recentBuzzMarkup = !loading ? (
+            buzzes.map((buzz) => <Buzz key={buzz.buzzId} buzz={buzz}/>)
         ) : (
             <p>Loading.......</p>
         );
@@ -40,6 +35,15 @@ class Home extends Component {
     }
 }
 
-export default Home;
+Home.propTypes = {
+    getBuzzes: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    data: state.data
+});
+
+export default connect(mapStateToProps, { getBuzzes })(Home);
 
 

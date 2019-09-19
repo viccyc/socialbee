@@ -4,7 +4,8 @@ import {
     SET_AUTHENTICATED,
     SET_UNAUTHENTICATED,
     LOADING_USER,
-    LIKE_BUZZ, UNLIKE_BUZZ
+    LIKE_BUZZ,
+    UNLIKE_BUZZ
 } from "../types";
 
 const initialState = {
