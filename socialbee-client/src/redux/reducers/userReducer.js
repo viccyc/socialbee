@@ -56,7 +56,7 @@ export default function (state = initialState, action) {
                 ...state,
                 // remove the like that corresponds to the buzzId
                 likes: state.likes.filter(
-                    (like) => like.buzzId === action.payload.buzzId
+                    (like) => like.buzzId !== action.payload.buzzId
                 )
             };
         default:

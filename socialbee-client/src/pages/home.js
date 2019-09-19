@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-// use this to make http requests to node (proxy setup in package.json)
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
