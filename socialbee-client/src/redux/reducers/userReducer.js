@@ -1,8 +1,11 @@
-import {SET_USER,
+import {
+    SET_USER,
     // SET_ERRORS, CLEAR_ERRORS, LOADING_UI,
     SET_AUTHENTICATED,
     SET_UNAUTHENTICATED,
-    LOADING_USER } from "../types";
+    LOADING_USER,
+    LIKE_BUZZ, UNLIKE_BUZZ
+} from "../types";
 
 const initialState = {
     authenticated: false,
@@ -35,6 +38,25 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            };
+        case LIKE_BUZZ:
+            return {
+                ...state,
+                likes: [
+                    ...state.likes,
+                    {
+                        userHandle: state.credentials.handle,
+                        buzzId: action.payload.buzzId
+                    }
+                ]
+            };
+        case UNLIKE_BUZZ:
+            return {
+                ...state,
+                // remove the like that corresponds to the buzzId
+                likes: state.likes.filter(
+                    (like) => like.buzzId === action.payload.buzzId
+                )
             };
         default:
             return state;
