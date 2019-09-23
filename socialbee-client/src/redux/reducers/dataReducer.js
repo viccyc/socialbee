@@ -1,4 +1,4 @@
-import { SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ } from '../types';
+import { SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ, DELETE_BUZZ } from '../types';
 
 const initialState = {
     buzzes: [],
@@ -7,6 +7,7 @@ const initialState = {
 };
 
 export default function (state= initialState, action) {
+    let index;
     switch (action.type) {
         case LOADING_DATA:
             return {
@@ -21,8 +22,14 @@ export default function (state= initialState, action) {
             };
         case LIKE_BUZZ:
         case UNLIKE_BUZZ:
-            let index = state.buzzes.findIndex((buzz) => buzz.buzzId === action.payload.buzzId);
+            index = state.buzzes.findIndex((buzz) => buzz.buzzId === action.payload.buzzId);
             state.buzzes[index] = action.payload;
+            return {
+                ...state
+            };
+        case DELETE_BUZZ:
+            index = state.buzzes.findIndex((buzz) => buzz.buzzId === action.payload);
+            state.buzzes.splice(index, 1);
             return {
                 ...state
             };

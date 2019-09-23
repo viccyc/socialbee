@@ -1,4 +1,4 @@
-import { SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ } from '../types';
+import { SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ, DELETE_BUZZ } from '../types';
 import axios from 'axios';
 
 // get all buzzes
@@ -43,4 +43,12 @@ export const unlikeBuzz = (buzzId) => dispatch => {
         .catch((err) => {
             console.log(err);
         })
+};
+
+export const deleteBuzz = (buzzId) => (dispatch) => {
+    axios.delete(`/buzz/${buzzId}`)
+        .then(() => {
+            dispatch({ type: DELETE_BUZZ, payload: buzzId })
+        })
+        .catch(err => console.log(err));
 };

@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 import MyButton from '../util/Mybutton';
+import DeleteBuzz from '../components/DeleteBuzz';
 
 // MUI imports
 import Card from '@material-ui/core/Card';
@@ -59,7 +60,8 @@ class Buzz extends Component {
                 commentCount
             },
             user: {
-                authenticated
+                authenticated,
+                credentials: { handle }
             }
         } = this.props;
         const likeButton = !authenticated ? (
@@ -77,6 +79,9 @@ class Buzz extends Component {
                 <FavoriteBorder color="primary"/>
             </MyButton>
         );
+        const deleteButton = authenticated && userHandle === handle ? (
+            <DeleteBuzz buzzId={buzzId}/>
+        ) : null;
         return (
             <Card className={classes.card}>
                 <CardMedia className={classes.image} image={userImage} title="Profile Image" />
@@ -97,6 +102,7 @@ class Buzz extends Component {
                         <ChatIcon color="primary"/>
                     </MyButton>
                     <span>{commentCount} Comments</span>
+                    {deleteButton}
                 </CardContent>
             </Card>
         )

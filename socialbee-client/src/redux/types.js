@@ -13,3 +13,4 @@ export const SET_BUZZES = 'SET_BUZZES';
 export const SET_BUZZ = 'SET_BUZZ';
 export const LIKE_BUZZ = 'LIKE_BUZZ';
 export const UNLIKE_BUZZ = 'UNLIKE_BUZZ';
+export const DELETE_BUZZ = 'DELETE_BUZZ';
