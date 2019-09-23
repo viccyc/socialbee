@@ -23,6 +23,7 @@ const Link = require("react-router-dom").Link;
 
 const styles = {
     card: {
+        position: 'relative',
         display: 'flex',
         marginBottom: 20
     },
