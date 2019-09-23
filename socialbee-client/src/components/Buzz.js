@@ -38,12 +38,7 @@ const styles = {
 class Buzz extends Component {
     // check if it has likes, and if they belong to user
     likedBuzz = () => {
-        console.log('Have I liked this one?:', this.props.user.likes.find(like => like.buzzId === this.props.buzz.buzzId));
-
-        if (this.props.likes && this.props.user.likes.find(like => like.buzzId === this.props.buzz.buzzId)) {
-            console.log('I liked this one!!');
-            return true;
-        } else return false;
+        return (this.props.likeBuzz && this.props.user.likes.find(like => like.buzzId === this.props.buzz.buzzId));
     };
     likeBuzz = () => {
         this.props.likeBuzz(this.props.buzz.buzzId);

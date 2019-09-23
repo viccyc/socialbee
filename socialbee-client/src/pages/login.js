@@ -28,7 +28,8 @@ class Login extends Component {
         }
     }
     // need to set state if there are errors as they don't get set straight away
-    componentWillReceiveProps(nextProps, nextContext) {
+    // this is being depreciated - use getDerivedStateFromProps???
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.UI.errors) {
             this.setState({ errors: nextProps.UI.errors });
         }
