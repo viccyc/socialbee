@@ -24,7 +24,8 @@ exports.getAllBuzzes = (req, res) => {
 
 exports.postOneBuzz = (req, res) => {
   if (req.body.body.trim() === '') {
-      return res.status(400).json({ comment: 'Body must not be empty '});
+      console.log('did I get in here?!')
+      return res.status(400).json({ body: 'Body must not beeee empty '});
     }
 
   const newBuzz = {

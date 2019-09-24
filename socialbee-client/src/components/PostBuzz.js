@@ -36,11 +36,25 @@ class PostBuzz extends Component {
         body: '',
         errors: {}
     };
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.UI.errors) {
+            this.setState({
+                errors: nextProps.UI.errors
+            })
+        }
+    }
     handleOpen = () => {
         this.setState({ open: true });
     };
     handleClose = () => {
         this.setState({ open: false });
+    };
+    handleChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value})
+    };
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.props.postBuzz({ body: this.state.body });
     };
     render() {
         const { errors } = this.state;
@@ -65,8 +79,8 @@ class PostBuzz extends Component {
                                 multiline
                                 rows="3"
                                 placeholder="Buzz at your fellow beeees"
-                                error={errors.body ? true : false}
-                                helperText={errors.body}
+                                error={errors.comment ? true : false}
+                                helperText={errors.comment}
                                 className={classes.textField}
                                 onChange={this.handleChange}
                                 fullWidth
