@@ -43,14 +43,15 @@ class PostBuzz extends Component {
             });
         }
         if (!nextProps.UI.errors && !nextProps.UI.loading) {
-            this.setState({ body: '', open: false, errors: {} });
+            this.setState({ body: ''});
+            this.handleClose();
         }
     }
     handleOpen = () => {
         this.setState({ open: true });
     };
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({ open: false, errors: {} });
     };
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value});
