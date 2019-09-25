@@ -24,8 +24,10 @@ export const getBuzzes = () => dispatch => {
 
 export const postBuzz = (newBuzz) => (dispatch) => {
     dispatch({ type: LOADING_UI });
+    console.log('newBuzz:', newBuzz);
     axios.post('/buzz', newBuzz)
         .then((res) => {
+            console.log('res data:', res.data);
             dispatch({
                 type: POST_BUZZ,
                 payload: res.data
@@ -36,8 +38,8 @@ export const postBuzz = (newBuzz) => (dispatch) => {
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data
-            })
-        })
+            });
+        });
 };
 
 export const likeBuzz = (buzzId) => dispatch => {
@@ -50,7 +52,7 @@ export const likeBuzz = (buzzId) => dispatch => {
         })
         .catch((err) => {
             console.log(err);
-        })
+        });
 };
 
 export const unlikeBuzz = (buzzId) => dispatch => {
@@ -63,7 +65,7 @@ export const unlikeBuzz = (buzzId) => dispatch => {
         })
         .catch((err) => {
             console.log(err);
-        })
+        });
 };
 
 export const deleteBuzz = (buzzId) => (dispatch) => {

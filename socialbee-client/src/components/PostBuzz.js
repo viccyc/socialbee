@@ -15,7 +15,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 import {postBuzz} from "../redux/actions/dataActions";
 
-const styles = theme => ({
+const styles = (theme) => ({
     ...theme.mainTheme,
     submitButton: {
         position: 'relative'
@@ -40,7 +40,10 @@ class PostBuzz extends Component {
         if (nextProps.UI.errors) {
             this.setState({
                 errors: nextProps.UI.errors
-            })
+            });
+        }
+        if (!nextProps.UI.errors && !nextProps.UI.loading) {
+            this.setState({ body: '', open: false, errors: {} });
         }
     }
     handleOpen = () => {
@@ -50,10 +53,11 @@ class PostBuzz extends Component {
         this.setState({ open: false });
     };
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value})
+        this.setState({ [event.target.name]: event.target.value});
     };
     handleSubmit = (event) => {
         event.preventDefault();
+        console.log('submitted UI:', this.props.UI);
         this.props.postBuzz({ body: this.state.body });
     };
     render() {
@@ -66,7 +70,8 @@ class PostBuzz extends Component {
                 </MyButton>
                 <Dialog open={this.state.open} onClose={this.handleClose}
                         fullWidth maxWidth="sm">
-                    <MyButton tip="Close" onClick={this.handleClose} tipClassName={classes.closeButton}>
+                    <MyButton tip="Close" onClick={this.handleClose}
+                        tipClassName={classes.closeButton}>
                         <CloseIcon/>
                     </MyButton>
                     <DialogTitle>Post a new Buzz</DialogTitle>
@@ -85,13 +90,13 @@ class PostBuzz extends Component {
                                 onChange={this.handleChange}
                                 fullWidth
                             />
-                                <Button type="submit" variant="contained" color="primary"
-                                        className={classes.submitButton} disabled={loading}>
-                                    Submit
-                                    {loading && (
-                                        <CircularProgress size={30} className={classes.progressSpinner}/>
-                                    )}
-                                </Button>
+                            <Button type="submit" variant="contained" color="primary"
+                                    className={classes.submitButton} disabled={loading}>
+                                Submit
+                                {loading && (
+                                    <CircularProgress size={30} className={classes.progressSpinner}/>
+                                )}
+                            </Button>
                         </form>
                     </DialogContent>
                 </Dialog>

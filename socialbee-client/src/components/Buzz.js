@@ -50,7 +50,8 @@ class Buzz extends Component {
     };
     render() {
         dayjs.extend(relativeTime);
-        const { classes,
+        const {
+            classes,
             buzz: {
                 body,
                 createdAt,
@@ -85,7 +86,10 @@ class Buzz extends Component {
         ) : null;
         return (
             <Card className={classes.card}>
-                <CardMedia className={classes.image} image={userImage} title="Profile Image" />
+                <CardMedia
+                    className={classes.image}
+                    image={userImage}
+                    title="Profile Image" />
                 <CardContent className={classes.content}>
                     <Typography variant="h5"
                         component={Link}
@@ -111,11 +115,11 @@ class Buzz extends Component {
 }
 
 Buzz.propTypes = {
-    likeBuzz: PropTypes.func.isRequired,
-    unlikeBuzz: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     buzz: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    likeBuzz: PropTypes.func.isRequired,
+    unlikeBuzz: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

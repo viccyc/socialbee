@@ -38,7 +38,7 @@ Home.propTypes = {
     data: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     data: state.data
 });
 
