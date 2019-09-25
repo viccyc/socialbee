@@ -13,20 +13,23 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
-import {postBuzz} from "../redux/actions/dataActions";
+import { postBuzz, clearErrors } from "../redux/actions/dataActions";
 
 const styles = (theme) => ({
     ...theme.mainTheme,
     submitButton: {
-        position: 'relative'
+        position: 'relative',
+        float: 'right',
+        marginTop: '10px',
+        marginBottom: '10px'
     },
     progressSpinner: {
         position: 'absolute'
     },
     closeButton: {
         position: 'absolute',
-        left: '90%',
-        top: '10%'
+        left: '91%',
+        top: '6%'
     }
 });
 
@@ -43,14 +46,14 @@ class PostBuzz extends Component {
             });
         }
         if (!nextProps.UI.errors && !nextProps.UI.loading) {
-            this.setState({ body: ''});
-            this.handleClose();
+            this.setState({ body: '', open: false, errors: {} });
         }
     }
     handleOpen = () => {
         this.setState({ open: true });
     };
     handleClose = () => {
+        this.props.clearErrors();
         this.setState({ open: false, errors: {} });
     };
     handleChange = (event) => {
@@ -108,6 +111,7 @@ class PostBuzz extends Component {
 
 PostBuzz.propTypes = {
     postBuzz: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired
 };
 
@@ -115,5 +119,5 @@ const mapStateToProps = (state) => ({
     UI: state.UI
 });
 
-export default connect(mapStateToProps, { postBuzz })(withStyles(styles)(PostBuzz));
+export default connect(mapStateToProps, { postBuzz, clearErrors })(withStyles(styles)(PostBuzz));
 
