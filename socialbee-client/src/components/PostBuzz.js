@@ -79,8 +79,8 @@ class PostBuzz extends Component {
                                 multiline
                                 rows="3"
                                 placeholder="Buzz at your fellow beeees"
-                                error={errors.comment ? true : false}
-                                helperText={errors.comment}
+                                error={errors.body ? true : false}
+                                helperText={errors.body}
                                 className={classes.textField}
                                 onChange={this.handleChange}
                                 fullWidth

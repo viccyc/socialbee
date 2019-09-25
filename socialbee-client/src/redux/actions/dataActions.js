@@ -33,7 +33,6 @@ export const postBuzz = (newBuzz) => (dispatch) => {
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
-            console.log(err.response);
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data
