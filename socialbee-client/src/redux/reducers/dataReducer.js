@@ -1,4 +1,6 @@
-import {SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ, DELETE_BUZZ, POST_BUZZ} from '../types';
+import {SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ,
+    DELETE_BUZZ, POST_BUZZ, SET_BUZZ
+} from '../types';
 
 const initialState = {
     buzzes: [],
@@ -19,6 +21,11 @@ export default function (state= initialState, action) {
                 ...state,
                 buzzes: action.payload,
                 loading: false
+            };
+        case SET_BUZZ:
+            return {
+                ...state,
+                buzz: action.payload
             };
         case LIKE_BUZZ:
         case UNLIKE_BUZZ:
