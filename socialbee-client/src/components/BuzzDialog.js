@@ -37,6 +37,18 @@ const styles = (theme) => ({
     closeButton: {
         position: 'absolute',
         left: '90%'
+    },
+    expandButton: {
+        position: 'absolute',
+        left: '90%'
+    },
+    spinnerDiv: {
+        textAlign: 'center',
+        marginTop: 50,
+        marginBottom: 50
+    },
+    profileInfo: {
+        marginTop: 20
     }
 });
 
@@ -68,13 +80,15 @@ class BuzzDialog extends Component {
         } = this.props;
 
         const dialogMarkup = loading ? (
-            <CircularProgress size={20}/>
+            <div className={classes.spinnerDiv}>
+                <CircularProgress size={100}/>
+            </div>
         ) : (
             <Grid container spacing={2}>
                 <Grid item sm={5}>
                     <img src={userImage} alt="Profile" className={classes.profileImage}/>
                 </Grid>
-                <Grid item sm={7}>
+                <Grid item sm={7} className={classes.profileInfo}>
                     <Typography
                         component={Link}
                         color="primary"
