@@ -29,8 +29,14 @@ export default function (state= initialState, action) {
             };
         case LIKE_BUZZ:
         case UNLIKE_BUZZ:
-            index = state.buzzes.findIndex((buzz) => buzz.buzzId === action.payload.buzzId);
+            index = state.buzzes.findIndex(
+                (buzz) => buzz.buzzId === action.payload.buzzId);
             state.buzzes[index] = action.payload;
+            // if we un/like a scream and it has the same Id as the one
+            // open in the dialog, then we need to update it
+            if (state.buzz.buzzId === action.payload.buzzId) {
+                state.buzz = action.payload;
+            }
             return {
                 ...state
             };
