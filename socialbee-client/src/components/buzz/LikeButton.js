@@ -15,8 +15,8 @@ class LikeButton extends Component {
     // check if it has likes, and if they belong to user
     likedBuzz = () => {
         return (this.props.likeBuzz &&
-            this.props.user.likes.find
-            (like => like.buzzId === this.props.buzzId));
+            this.props.user.likes
+                .find(like => like.buzzId === this.props.buzzId));
     };
     likeBuzz = () => {
         this.props.likeBuzz(this.props.buzzId);

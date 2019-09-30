@@ -17,15 +17,12 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { connect } from 'react-redux';
 import { getBuzz } from "../../redux/actions/dataActions";
 import LikeButton from "./LikeButton";
+import Comments from './Comments';
 
 const Link = require("react-router-dom").Link;
 
 const styles = (theme) => ({
     ...theme.mainTheme,
-    invisibleSeparator: {
-        border: 'none',
-        margin: 4
-    },
     profileImage: {
         maxWidth: 200,
         height: 200,
@@ -75,7 +72,8 @@ class BuzzDialog extends Component {
                 likeCount,
                 commentCount,
                 userImage,
-                userHandle
+                userHandle,
+                comments
             },
             UI: {loading}
         } = this.props;
@@ -113,6 +111,8 @@ class BuzzDialog extends Component {
                     </MyButton>
                     <span>{commentCount} Comments</span>
                 </Grid>
+                <hr className={classes.visibleSeparator}/>
+                <Comments comments={comments}/>
             </Grid>
         );
         return (
