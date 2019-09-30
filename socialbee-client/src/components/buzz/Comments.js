@@ -26,7 +26,7 @@ class Comments extends Component {
         const { comments, classes } = this.props;
         return (
             <Grid container>
-                {comments.map((comment) => {
+                {comments.map((comment, index) => {
                     const { body, createdAt, userImage, userHandle } = comment;
                     return (
                         <Fragment key={createdAt}>
@@ -58,7 +58,10 @@ class Comments extends Component {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <hr className={classes.visibleSeparator}/>
+                            {/*// put a line under every comment except for last*/}
+                            {index !== comments.length - 1 && (
+                                <hr className={classes.visibleSeparator}/>
+                            )}
                         </Fragment>
                     )
                 })}
