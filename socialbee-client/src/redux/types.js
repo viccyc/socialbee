@@ -16,4 +16,4 @@ export const LIKE_BUZZ = 'LIKE_BUZZ';
 export const UNLIKE_BUZZ = 'UNLIKE_BUZZ';
 export const DELETE_BUZZ = 'DELETE_BUZZ';
 export const POST_BUZZ = 'POST_BUZZ';
-
+export const SUBMIT_COMMENT ='SUBMIT_COMMENT';

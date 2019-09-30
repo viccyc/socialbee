@@ -1,5 +1,5 @@
 import {SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ,
-    DELETE_BUZZ, POST_BUZZ, SET_BUZZ
+    DELETE_BUZZ, POST_BUZZ, SET_BUZZ, SUBMIT_COMMENT
 } from '../types';
 
 const initialState = {
@@ -53,6 +53,16 @@ export default function (state= initialState, action) {
                     action.payload,
                     ...state.buzzes
                 ]
+            };
+        case SUBMIT_COMMENT:
+            // need to take the comment for the buzz object and put at top
+            // of comments array
+            return {
+                ...state,
+                buzz: {
+                    ...state.buzz,
+                    comments: [action.payload, ...state.buzz.comments]
+                }
             };
         default:
             return state;

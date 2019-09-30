@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import { getBuzz } from "../../redux/actions/dataActions";
 import LikeButton from "./LikeButton";
 import Comments from './Comments';
+import CommentForm from './CommentForm';
 
 const Link = require("react-router-dom").Link;
 
@@ -112,6 +113,7 @@ class BuzzDialog extends Component {
                     <span>{commentCount} Comments</span>
                 </Grid>
                 <hr className={classes.visibleSeparator}/>
+                <CommentForm buzzId={buzzId}/>
                 <Comments comments={comments}/>
             </Grid>
         );

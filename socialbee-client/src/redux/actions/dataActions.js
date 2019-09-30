@@ -1,7 +1,7 @@
 import {
     SET_BUZZES, LOADING_DATA, LIKE_BUZZ, UNLIKE_BUZZ,
     DELETE_BUZZ, LOADING_UI, POST_BUZZ, CLEAR_ERRORS,
-    SET_ERRORS, SET_BUZZ, STOP_LOADING_UI
+    SET_ERRORS, SET_BUZZ, STOP_LOADING_UI, SUBMIT_COMMENT
 } from '../types';
 import axios from 'axios';
 
@@ -46,7 +46,7 @@ export const postBuzz = (newBuzz) => (dispatch) => {
                 type: POST_BUZZ,
                 payload: res.data
             });
-            dispatch({ type: CLEAR_ERRORS });
+            dispatch(clearErrors());
         })
         .catch((err) => {
             dispatch({
@@ -80,6 +80,23 @@ export const unlikeBuzz = (buzzId) => dispatch => {
         .catch((err) => {
             console.log(err);
         });
+};
+
+export const submitComment = (buzzId, commentData) => (dispatch) => {
+  axios.post(`/buzz/${buzzId}/comment`, commentData)
+      .then((res) => {
+          dispatch({
+              type: SUBMIT_COMMENT,
+              payload: res.data
+          });
+          dispatch(clearErrors());
+      })
+      .catch((err) => {
+          dispatch({
+              type: SET_ERRORS,
+              payload: err.response.data
+          });
+      });
 };
 
 export const deleteBuzz = (buzzId) => (dispatch) => {
