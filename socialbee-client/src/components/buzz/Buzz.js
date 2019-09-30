@@ -3,8 +3,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
-import MyButton from '../util/Mybutton';
-import DeleteBuzz from '../components/DeleteBuzz';
+import MyButton from '../../util/Mybutton';
+import DeleteBuzz from './DeleteBuzz';
 import BuzzDialog from './BuzzDialog';
 import LikeButton from './LikeButton';
 // MUI imports

@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types'; // ES6
-import MyButton from '../util/Mybutton';
+import MyButton from '../../util/Mybutton';
 import dayjs from 'dayjs';
 // MUI Imports
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -15,7 +15,7 @@ import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux imports
 import { connect } from 'react-redux';
-import { getBuzz } from "../redux/actions/dataActions";
+import { getBuzz } from "../../redux/actions/dataActions";
 import LikeButton from "./LikeButton";
 
 const Link = require("react-router-dom").Link;

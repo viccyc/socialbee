@@ -16,7 +16,7 @@ import login from './pages/login';
 import signup from './pages/signup';
 import axios from 'axios';
 // Components
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
 import AuthRoute from './util/AuthRoute';
 
 const theme = createMuiTheme(themeFile);

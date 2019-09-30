@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import MyButton from '../util/Mybutton';
-import PostBuzz from './PostBuzz';
+import MyButton from '../../util/Mybutton';
+import PostBuzz from '../buzz/PostBuzz';
 // MaterialUI stuff
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';

@@ -1,9 +1,9 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types'; // ES6
-import MyButton from '../util/Mybutton';
+import MyButton from '../../util/Mybutton';
 // Redux imports
 import { connect } from 'react-redux';
-import { editUserDetails } from "../redux/actions/userActions";
+import { editUserDetails } from "../../redux/actions/userActions";
 // MUI Imports
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';

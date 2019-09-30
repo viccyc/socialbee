@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import MyButton from '../util/Mybutton';
+import MyButton from '../../util/Mybutton';
 import PropTypes from 'prop-types';
 // Icons
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // Redux
 import { connect } from 'react-redux';
-import { likeBuzz, unlikeBuzz } from "../redux/actions/dataActions";
+import { likeBuzz, unlikeBuzz } from "../../redux/actions/dataActions";
 
 const Link = require("react-router-dom").Link;
 
