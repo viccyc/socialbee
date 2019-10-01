@@ -107,6 +107,23 @@ export const deleteBuzz = (buzzId) => (dispatch) => {
         .catch(err => console.log(err));
 };
 
+export const getUserData = (userHandle) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+    axios.get(`/user/${userHandle}`)
+        .then((res) => {
+            dispatch({
+                type: SET_BUZZES,
+                payload: res.data.buzzes
+            });
+        })
+        .catch(() => {
+            dispatch({
+                type: SET_BUZZES,
+                payload: null
+            });
+        });
+};
+
 export const clearErrors = () => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 };
