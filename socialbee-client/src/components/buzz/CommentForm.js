@@ -45,8 +45,8 @@ class CommentForm extends Component {
                         name="body"
                         type="text"
                         label="Comment on buzz"
-                        error={errors.comment ? true : false}
-                        helperText={errors.comment}
+                        error={errors.error ? true : false}
+                        helperText={errors.error}
                         value={this.state.body}
                         onChange={this.handleChange}
                         fullWidth

@@ -14,9 +14,11 @@ exports.getAllBuzzes = (req, res) => {
                   createdAt: doc.data().createdAt,
                   commentCount: doc.data().commentCount,
                   likeCount: doc.data().likeCount,
-                  userImage: doc.data().userImage
+                  userImage: doc.data().userImage,
+                  comments: doc.data().comments
               });
           });
+          console.log('get buzzes: ', buzzes);
           return res.json(buzzes);
       })
       .catch((err) => console.error(err));
@@ -123,7 +125,7 @@ exports.likeBuzz = (req, res) => {
             if (doc.exists) {
                 buzzData = doc.data();
                 buzzData.buzzId = doc.id;
-                        console.log('buzzData:' , buzzData);
+                        console.log('like buzzData:' , buzzData);
                 return likeDocument.get();
             } else {
                 return res.status(404).json({ error: 'Buzz not found' });
@@ -167,6 +169,8 @@ exports.unlikeBuzz = (req, res) => {
             if (doc.exists) {
                 buzzData = doc.data();
                 buzzData.buzzId = doc.id;
+                console.log('unlike buzzData:' , buzzData);
+
                 return likeDocument.get();
             } else {
                 return res.status(404).json({ error: 'Buzz not found' });

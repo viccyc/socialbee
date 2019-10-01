@@ -15,7 +15,7 @@ import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux imports
 import { connect } from 'react-redux';
-import { getBuzz } from "../../redux/actions/dataActions";
+import { getBuzz, clearErrors } from "../../redux/actions/dataActions";
 import LikeButton from "./LikeButton";
 import Comments from './Comments';
 import CommentForm from './CommentForm';
@@ -61,6 +61,7 @@ class BuzzDialog extends Component {
     };
     handleClose = () => {
         this.setState({ open: false });
+        this.props.clearErrors();
     };
 
     render() {
@@ -140,6 +141,7 @@ class BuzzDialog extends Component {
 }
 
 BuzzDialog.propTypes = {
+    clearErrors: PropTypes.func.isRequired,
     getBuzz: PropTypes.func.isRequired,
     buzzId: PropTypes.string.isRequired,
     userHandle: PropTypes.string.isRequired,
@@ -153,7 +155,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    getBuzz
+    getBuzz,
+    clearErrors
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(BuzzDialog));

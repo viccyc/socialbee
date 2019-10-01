@@ -6,7 +6,7 @@ import {
 import axios from 'axios';
 
 // get all buzzes
-export const getBuzzes = () => dispatch => {
+export const getBuzzes = () => (dispatch)=> {
     dispatch({ type: LOADING_DATA });
     axios.get('/buzzes')
         .then(res => {
@@ -56,7 +56,7 @@ export const postBuzz = (newBuzz) => (dispatch) => {
         });
 };
 
-export const likeBuzz = (buzzId) => dispatch => {
+export const likeBuzz = (buzzId) => (dispatch) => {
     axios.get(`/buzz/${buzzId}/like`)
         .then((res) => {
             dispatch({
@@ -69,7 +69,7 @@ export const likeBuzz = (buzzId) => dispatch => {
         });
 };
 
-export const unlikeBuzz = (buzzId) => dispatch => {
+export const unlikeBuzz = (buzzId) => (dispatch) => {
     axios.get(`/buzz/${buzzId}/unlike`)
         .then((res) => {
             dispatch({
@@ -107,6 +107,6 @@ export const deleteBuzz = (buzzId) => (dispatch) => {
         .catch(err => console.log(err));
 };
 
-export const clearErrors = () => dispatch => {
+export const clearErrors = () => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 };
