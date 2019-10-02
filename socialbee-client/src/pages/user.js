@@ -1,21 +1,13 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Buzz from '../components/buzz/Buzz';
-import {connect} from "react-redux";
-import {signupUser} from "../redux/actions/userActions";
+import StaticProfile from '../components/profile/StaticProfile';
 import PropTypes from 'prop-types';
-import AppIcon from '../images/favicon.ico';
-
 // MUI imports
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 // Redux imports
-import { connect } from 'react-redux';
+import {connect} from "react-redux";
 import { getUserData } from "../redux/actions/dataActions";
-import Profile from "./home";
 
 const Link = require("react-router-dom").Link;
 
@@ -49,7 +41,9 @@ class User extends Component {
                     {buzzesMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
-                    <StaticProfile profile={this.state.profile}/>
+                    {this.state.profile === null ? (
+                        <p>Loading profile...</p>
+                    ) : <StaticProfile profile={this.state.profile}/>}
                 </Grid>
             </Grid>
         );

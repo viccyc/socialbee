@@ -192,7 +192,7 @@ exports.uploadImage = (req, res) => {
 
 // gets details of any user when handle is given
 exports.getUserDetails = (req, res) => {
-    let userData = [];
+    let userData = {};
     db.doc(`/users/${req.params.handle}`).get()
         .then((doc) => {
             if (doc.exists) {
@@ -208,7 +208,7 @@ exports.getUserDetails = (req, res) => {
         .then((data) => {
             userData.buzzes = [];
             data.forEach((doc) => {
-                userData.push({
+                userData.buzzes.push({
                     body: doc.data().body,
                     createdAt: doc.data().createdAt,
                     userHandle: doc.data().userHandle,
