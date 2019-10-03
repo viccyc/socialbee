@@ -60,8 +60,13 @@ class BuzzDialog extends Component {
             this.handleOpen();
         }
     }
-
     handleOpen = () => {
+        let oldPath = window.location.pathname;
+        const { userHandle, buzzId } = this.props;
+        const newPath = `/users/${userHandle}/buzz/${buzzId}`;
+
+        window.history.pushState(null, null, newPath);
+
         this.setState({ open: true });
         this.props.getBuzz(this.props.buzzId);
     };
