@@ -53,7 +53,9 @@ const styles = (theme) => ({
 
 class BuzzDialog extends Component {
     state = {
-        open: false
+        open: false,
+        oldPath: '',
+        newPath: ''
     };
     componentDidMount() {
         if (this.props.openDialog) {
@@ -67,10 +69,11 @@ class BuzzDialog extends Component {
 
         window.history.pushState(null, null, newPath);
 
-        this.setState({ open: true });
+        this.setState({ open: true, oldPath, newPath });
         this.props.getBuzz(this.props.buzzId);
     };
     handleClose = () => {
+        window.history.pushState(null, null, this.state.oldPath);
         this.setState({ open: false });
         this.props.clearErrors();
     };
