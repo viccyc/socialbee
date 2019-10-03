@@ -9,7 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 // Icons
 import HomeIcon from '@material-ui/icons/Home';
-import Notifications from '@material-ui/icons/Notifications';
+import Notifications from './Notifications';
 
 const Link = require("react-router-dom").Link;
 
@@ -27,9 +27,7 @@ class Navbar extends Component {
                                     <HomeIcon/>
                                 </MyButton>
                             </Link>
-                            <MyButton tip="Notifications">
-                                <Notifications/>
-                            </MyButton>
+                            <Notifications/>
                         </Fragment>
                     ) : (
                         <Fragment>
