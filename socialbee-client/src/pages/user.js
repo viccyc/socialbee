@@ -13,10 +13,15 @@ const Link = require("react-router-dom").Link;
 
 class User extends Component {
     state = {
-        profile: null
+        profile: null,
+        buzzIdParam: null
     };
     componentDidMount() {
         const handle = this.props.match.params.handle;
+        const buzzId = this.props.match.params.buzzId;
+
+        if (buzzId) this.setState({ buzzIdParam: buzzId });
+
         this.props.getUserData(handle);
         axios.get(`/user/${handle}`)
             .then((res) => {
@@ -28,12 +33,19 @@ class User extends Component {
     }
     render() {
         const { buzzes, loading } = this.props.data;
+        const { buzzIdParam } = this.state;
         const buzzesMarkup  = loading ? (
             <p>Loading data....</p>
         ) : buzzes === null ? (
             <p>No buzzes for this user yet</p>
-        ) : (
+        ) : !buzzIdParam ? (
             buzzes.map(buzz => <Buzz key={buzz.buzzId} buzz={buzz}/>)
+        ) : (
+            buzzes.map((buzz) => {
+                if (buzz.buzzId !== buzzIdParam)
+                    return <Buzz key={buzz.buzzId} buzz={buzz}/>;
+                else return <Buzz key={buzz.buzzId} buzz={buzz} openDialog/>;
+            })
         );
         return (
             <Grid container spacing={10}>

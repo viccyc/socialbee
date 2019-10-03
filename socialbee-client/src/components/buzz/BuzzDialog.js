@@ -55,6 +55,12 @@ class BuzzDialog extends Component {
     state = {
         open: false
     };
+    componentDidMount() {
+        if (this.props.openDialog) {
+            this.handleOpen();
+        }
+    }
+
     handleOpen = () => {
         this.setState({ open: true });
         this.props.getBuzz(this.props.buzzId);
