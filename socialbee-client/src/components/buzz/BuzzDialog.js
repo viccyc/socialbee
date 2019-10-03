@@ -63,9 +63,12 @@ class BuzzDialog extends Component {
         }
     }
     handleOpen = () => {
+        // update url with handle and buzz when dialog opens
         let oldPath = window.location.pathname;
         const { userHandle, buzzId } = this.props;
         const newPath = `/users/${userHandle}/buzz/${buzzId}`;
+
+        if (oldPath === newPath) oldPath = `/users/${userHandle}`;
 
         window.history.pushState(null, null, newPath);
 
