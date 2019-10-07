@@ -9,8 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import {connect} from "react-redux";
 import { getUserData } from "../redux/actions/dataActions";
 
-const Link = require("react-router-dom").Link;
-
 class User extends Component {
     state = {
         profile: null,

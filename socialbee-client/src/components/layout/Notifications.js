@@ -23,6 +23,18 @@ class Notifications extends Component {
     state = {
         anchorEl: null
     };
+    handleOpen = (event) => {
+        this.setState({ anchorEl: event.target });
+    };
+    handleClose = (event) => {
+        this.setState({ anchorEl: null });
+    };
+    onMenuOpened = () => {
+        let unreadNotificationsIds = this.props.notifications
+            .filter(notif => !notif.read)
+            .map(notif => notif.notificationId);
+        this.props.markNotificationsRead(unreadNotificationsIds);
+    };
     render() {
         const notifications = this.props.notifications;
         const anchorEl = this.state.anchorEl;
@@ -80,7 +92,7 @@ class Notifications extends Component {
                 <Tooltip title="Nofifications" placement="top">
                     <IconButton
                         aria-owns={anchorEl ? 'simple-menu' : undefined}
-                        aria-haspopups="true"
+                        aria-haspopup="true"
                         onClick={this.handleOpen}
                     >
                         {notificationsIcon}
