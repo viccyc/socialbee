@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Buzz from '../components/buzz/Buzz';
 import Profile from '../components/profile/Profile';
+import BuzzSkeleton from '../util/BuzzSkeleton';
 
 import { connect } from 'react-redux';
 import { getBuzzes } from "../redux/actions/dataActions";
@@ -18,7 +19,7 @@ class Home extends Component {
         let recentBuzzMarkup = !loading ? (
             buzzes.map((buzz) => <Buzz key={buzz.buzzId} buzz={buzz}/>)
         ) : (
-            <p>Loading.......</p>
+            <BuzzSkeleton/>
         );
         return (
             <Grid container spacing={10}>

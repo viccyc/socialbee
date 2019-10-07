@@ -3,6 +3,7 @@ import axios from 'axios';
 import Buzz from '../components/buzz/Buzz';
 import StaticProfile from '../components/profile/StaticProfile';
 import PropTypes from 'prop-types';
+import BuzzSkeleton from '../util/BuzzSkeleton';
 // MUI imports
 import Grid from '@material-ui/core/Grid';
 // Redux imports
@@ -33,7 +34,7 @@ class User extends Component {
         const { buzzes, loading } = this.props.data;
         const { buzzIdParam } = this.state;
         const buzzesMarkup  = loading ? (
-            <p>Loading data....</p>
+            <BuzzSkeleton/>
         ) : buzzes === null ? (
             <p>No buzzes for this user yet</p>
         ) : !buzzIdParam ? (
