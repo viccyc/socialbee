@@ -4,6 +4,7 @@ import Buzz from '../components/buzz/Buzz';
 import StaticProfile from '../components/profile/StaticProfile';
 import PropTypes from 'prop-types';
 import BuzzSkeleton from '../util/BuzzSkeleton';
+import ProfileSkelton from '../util/ProfileSkeleton';
 // MUI imports
 import Grid from '@material-ui/core/Grid';
 // Redux imports
@@ -53,7 +54,7 @@ class User extends Component {
                 </Grid>
                 <Grid item sm={4} xs={12}>
                     {this.state.profile === null ? (
-                        <p>Loading profile...</p>
+                        <ProfileSkelton/>
                     ) : <StaticProfile profile={this.state.profile}/>}
                 </Grid>
             </Grid>

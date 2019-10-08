@@ -4,6 +4,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
 import MyButton from '../../util/Mybutton';
+import ProfileSkeleton from '../../util/ProfileSkeleton';
+
 // MUI imports
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -111,7 +113,7 @@ class Profile extends Component {
                     </Button>
                 </div>
             </Paper>
-        )) : (<p>loading....</p>);
+        )) : (<ProfileSkeleton/>);
         return profileMarkup;
     }
 }

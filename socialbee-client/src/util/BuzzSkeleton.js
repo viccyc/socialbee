@@ -25,7 +25,7 @@ const styles = (theme) => ({
     },
     handle: {
         width: 60,
-        height: 20,
+        height: 18,
         backgroundColor: theme.palette.primary.main,
         marginBottom: 7
     },
