@@ -38,13 +38,11 @@ export const getBuzz = (buzzId) => (dispatch) => {
 
 export const postBuzz = (newBuzz) => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    console.log('newBuzz:', newBuzz);
     axios.post('/buzz', newBuzz)
         .then((res) => {
-            console.log('res data:', res.data);
             dispatch({
                 type: POST_BUZZ,
-                payload: res.data
+                payload: res.data.responseBuzz
             });
             dispatch(clearErrors());
         })

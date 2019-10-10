@@ -61,7 +61,6 @@ class PostBuzz extends Component {
     };
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log('submitted UI:', this.props.UI);
         this.props.postBuzz({ body: this.state.body });
     };
     render() {
