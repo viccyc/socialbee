@@ -73,7 +73,8 @@ class Buzz extends Component {
                     </Typography>
                     <Typography variant="body1">{body}</Typography>
                     <Typography variant="body2" color="textSecondary">
-                        {dayjs(createdAt).fromNow()}
+                        {/*Need to take away a fraction of a sec so that it didn't show in the future*/}
+                        {dayjs(createdAt).add(-0.3, 'second').fromNow()}
                     </Typography>
                     <LikeButton buzzId={buzzId}/>
                     <span>{likeCount} Likes</span>
