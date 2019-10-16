@@ -32,10 +32,10 @@ export default function (state= initialState, action) {
             index = state.buzzes.findIndex(
                 (buzz) => buzz.buzzId === action.payload.buzzId);
             state.buzzes[index] = action.payload;
-            // if we un/like a scream and it has the same Id as the one
+            // if we un/like a buzz and it has the same Id as the one
             // open in the dialog, then we need to update it
             if (state.buzz.buzzId === action.payload.buzzId) {
-                state.buzz = action.payload;
+                state.buzz = { ...state.buzz, ...action.payload };
             }
             return {
                 ...state
