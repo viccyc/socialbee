@@ -20,6 +20,8 @@ import CalendarToday from '@material-ui/icons/CalendarToday';
 // Redux
 import { connect } from 'react-redux';
 import { logoutUser, uploadImage } from "../../redux/actions/userActions";
+import { getBuzzes } from "../../redux/actions/dataActions";
+
 const Link = require("react-router-dom").Link;
 
 const styles = (theme) => ({
@@ -27,9 +29,13 @@ const styles = (theme) => ({
 });
 
 class Profile extends Component {
+    componentDidUpdate() {
+        this.props.getBuzzes();
+    }
     handleImageChange = (event) => {
         const image = event.target.files[0];
         const formData = new FormData();
+
         formData.append('image', image, image.name);
         this.props.uploadImage(formData);
     };
@@ -122,11 +128,12 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-const mapActionsToProps = { logoutUser, uploadImage };
+const mapActionsToProps = { logoutUser, uploadImage, getBuzzes };
 
 Profile.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     uploadImage: PropTypes.func.isRequired,
+    getBuzzes: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired
 };

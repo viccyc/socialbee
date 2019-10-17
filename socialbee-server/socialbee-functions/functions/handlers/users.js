@@ -141,7 +141,6 @@ exports.addUserDetails = (req, res) => {
 
 // upload a profile image for user
 exports.uploadImage = (req, res) => {
-    console.log('in uploadImage');
     const BusBoy = require('busboy');
     const path = require('path');
     const os = require('os');
@@ -165,7 +164,7 @@ exports.uploadImage = (req, res) => {
     });
 
     busboy.on('finish', () => {
-      admin.storage().bucket().upload(imageToBeUploaded.filePath, {
+        admin.storage().bucket().upload(imageToBeUploaded.filePath, {
           resumable: false,
           metadata: {
               metadata: {
