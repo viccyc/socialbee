@@ -92,6 +92,7 @@ exports.onUserImageChange = functions.firestore.document('users/{userId}')
     .onUpdate((change) => {
         if (change.before.data().imageUrl !== change.after.data().imageUrl) {
             const batch = db.batch();
+            const commentBatch = db.batch();
             return db.collection('buzzes')
                 .where('userHandle', '==', change.before.data().handle)
                 .get()
@@ -101,6 +102,18 @@ exports.onUserImageChange = functions.firestore.document('users/{userId}')
                         batch.update(buzz, { userImage: change.after.data().imageUrl });
                     });
                     return batch.commit();
+                })
+                .then((data) => {
+                    return db.collection('comments')
+                        .where('userHandle', '==', change.before.data().handle)
+                        .get()
+                        .then((data) => {
+                            data.forEach((doc) => {
+                                const comment = db.doc(`/comments/${doc.id}`);
+                                commentBatch.update(comment, { userImage: change.after.data().imageUrl });
+                            });
+                            return commentBatch.commit();
+                        })
                 })
                 .catch((err) =>
                     console.error(err));
